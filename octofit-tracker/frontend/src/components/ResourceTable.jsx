@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { fetchItems } from '../api'
 
-export default function ResourceTable({ resource, title, description, columns }) {
+export default function ResourceTable({ endpoint, title, description, columns }) {
   const [items, setItems] = useState([])
   const [status, setStatus] = useState('loading')
   const [error, setError] = useState('')
 
   useEffect(() => {
     let active = true
-    fetchItems(resource)
+    fetchItems(endpoint)
       .then((nextItems) => {
         if (active) {
           setItems(nextItems)
@@ -22,7 +22,7 @@ export default function ResourceTable({ resource, title, description, columns })
         }
       })
     return () => { active = false }
-  }, [resource])
+  }, [endpoint])
 
   return (
     <section className="resource-page">

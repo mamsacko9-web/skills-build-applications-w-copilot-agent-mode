@@ -12,8 +12,8 @@ export function getItems(payload) {
   return []
 }
 
-export async function fetchItems(resource) {
-  const response = await fetch(`${apiBaseUrl}/${resource}/`)
+export async function fetchItems(endpoint) {
+  const response = await fetch(endpoint)
   if (!response.ok) throw new Error(`Impossible de charger ${resource}`)
   return getItems(await response.json())
 }
