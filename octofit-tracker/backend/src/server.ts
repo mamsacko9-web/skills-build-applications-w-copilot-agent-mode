@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import cors from 'cors'
 import express from 'express'
 import { connectDatabase } from './config/database.js'
 import { Activity, Leaderboard, Team, User, Workout } from './models.js'
@@ -10,6 +11,13 @@ const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000'
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  ...(codespaceName ? [`https://${codespaceName}-5173.app.github.dev`] : []),
+]
+
+app.use(cors({ origin: allowedOrigins }))
 app.use(express.json())
 
 app.get('/api/health', (_request, response) => {
